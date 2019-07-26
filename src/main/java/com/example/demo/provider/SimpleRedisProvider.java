@@ -21,7 +21,10 @@ public class SimpleRedisProvider implements FindBlogByQueryPort, UpdateBlogByQue
 
     @Override
     public Mono<Void> updateBlogByQuery(String query, Blog blog) {
-        return null;
+
+        blogReactiveRedisOperations.opsForValue().set("test:" + query, blog).subscribe();
+
+        return Mono.empty();
     }
     
 }

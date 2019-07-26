@@ -20,7 +20,10 @@ public class RedisConfig {
     @Bean
     @Primary
     public ReactiveRedisConnectionFactory connectionFactory() {
-        return new LettuceConnectionFactory("localhost", 6379);
+
+        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory("192.168.19.137", 6379);
+
+        return lettuceConnectionFactory;
     }
 
     @Bean

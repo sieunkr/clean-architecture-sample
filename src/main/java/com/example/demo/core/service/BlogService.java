@@ -11,24 +11,28 @@ import reactor.core.publisher.Mono;
 @Service
 public class BlogService implements BlogUseCase {
 
-    private final FindBlogByQueryPort findBlogByQueryPort;
+    private final FindBlogByQueryPort simpleRedisProvider;
+    private final FindBlogByQueryPort naverBlogProvider;
     private final UpdateBlogByQueryPort updateBlogByQueryPort;
 
-    public BlogService(FindBlogByQueryPort simpleRedisProvider, UpdateBlogByQueryPort updateBlogByQueryPort) {
-        this.findBlogByQueryPort = simpleRedisProvider;
+    public BlogService(FindBlogByQueryPort simpleRedisProvider, FindBlogByQueryPort naverBlogProvider, UpdateBlogByQueryPort updateBlogByQueryPort) {
+        this.simpleRedisProvider = simpleRedisProvider;
+        this.naverBlogProvider = naverBlogProvider;
         this.updateBlogByQueryPort = updateBlogByQueryPort;
     }
 
     @Override
     public Mono<Blog> findBlogByQuery(String query) {
 
-        return findBlogByQueryPort.findBlogByQuery(query);
+        return simpleRedisProvider.findBlogByQuery(query);
     }
 
     @Override
     public Mono<Void> updateBlogByQuery(String query) {
 
-        updateBlogByQueryPort.updateBlogByQuery(query, findBlogByQueryPort.findBlogByQuery(query).block());
+        naverBlogProvider.findBlogByQuery(query).subscribe(blog -> {
+            updateBlogByQueryPort.updateBlogByQuery(query, blog);
+        });
 
         return Mono.empty();
     }
