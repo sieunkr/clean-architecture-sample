@@ -1,7 +1,6 @@
 package com.example.demo.entry.rest;
 
 import com.example.demo.core.domain.Blog;
-import com.example.demo.core.service.BlogService;
 import com.example.demo.core.usecase.BlogUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
