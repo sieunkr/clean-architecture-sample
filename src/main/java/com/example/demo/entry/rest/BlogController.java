@@ -21,13 +21,4 @@ public class BlogController {
     public Mono<Blog> findBlog(@RequestParam(name = "q") String query){
         return blogUseCase.findBlogByQuery(query);
     }
-
-    @GetMapping("/articles-update")
-    public Mono<Void> updateBlog(@RequestParam(name = "q") String query){
-        blogUseCase.updateBlogByQuery(query);
-
-        return Mono.empty();
-    }
-
-
 }

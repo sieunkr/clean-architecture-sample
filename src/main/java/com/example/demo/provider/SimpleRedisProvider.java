@@ -13,18 +13,18 @@ import reactor.core.publisher.Mono;
 public class SimpleRedisProvider implements FindBlogByQueryPort, UpdateBlogByQueryPort {
 
     private final ReactiveRedisOperations<String, Blog> blogReactiveRedisOperations;
+    private final String BLOG_ARTICLES_REDIS_KEY = "blog:articles:";
 
     @Override
     public Mono<Blog> findBlogByQuery(String query) {
-        return blogReactiveRedisOperations.opsForValue().get("test:" + query);
+        return blogReactiveRedisOperations.opsForValue().get(BLOG_ARTICLES_REDIS_KEY + query);
     }
 
     @Override
     public Mono<Void> updateBlogByQuery(String query, Blog blog) {
 
-        blogReactiveRedisOperations.opsForValue().set("test:" + query, blog).subscribe();
+        blogReactiveRedisOperations.opsForValue().set(BLOG_ARTICLES_REDIS_KEY + query, blog).subscribe();
 
         return Mono.empty();
     }
-    
 }
