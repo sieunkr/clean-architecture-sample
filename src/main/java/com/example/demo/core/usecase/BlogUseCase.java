@@ -5,4 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface BlogUseCase {
     Mono<Blog> findBlogByQuery(String query);
+    Mono<Void> updateBlogByQuery(String query);
 }

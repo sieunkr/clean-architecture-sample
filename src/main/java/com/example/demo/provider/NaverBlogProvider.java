@@ -2,6 +2,7 @@ package com.example.demo.provider;
 
 import com.example.demo.core.domain.Blog;
 import com.example.demo.core.usecase.FindBlogByQueryPort;
+import com.example.demo.core.usecase.UpdateBlogByQueryPort;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -32,4 +33,5 @@ public class NaverBlogProvider implements FindBlogByQueryPort {
                 .bodyToMono(Blog.class);
 
     }
+
 }
